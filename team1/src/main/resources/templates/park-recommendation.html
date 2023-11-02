@@ -84,7 +84,7 @@
 
         <!-- Parks Display Section -->
         <div th:each="park : ${parks}">
-            <a th:href="@{/showPark/${park.name}}" th:text="${park.name}"></a>
+            <a href="/showPark/ParkA" th:text="${park.name}"></a>
             <p>Type: <span th:text="${park.type}"></span></p>
             <p>Distance: <span th:text="${park.distance}"></span> miles</p>
             <p>Amenities:
