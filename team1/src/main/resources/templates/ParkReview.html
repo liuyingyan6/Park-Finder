@@ -120,7 +120,8 @@
             <input type="hidden" id="usernameField" name="username" value="">
             <input type="text" style="display: none" name="parkName" th:field="*{parkName}" th:value="${review.parkName}">
             <label>Rating ( 1 - 5 )
-                <input th:field="*{rating}" type="text" name="rating">
+<!--                <input th:field="*{rating}" type="text" name="rating">-->
+                <input th:field="*{rating}" type="range" name="rating" min="1" max="5" >
             </label>
             <br>
             <label>Review comments (max 50 words)<br>
