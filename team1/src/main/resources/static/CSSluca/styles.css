@@ -1,4 +1,8 @@
-
+.mainBody {
+    width: 50%;
+    margin: 0 auto; /* center */
+    font-family: Arial, sans-serif;
+}
 /*
 .filter-container {
     max-width: 600px;
