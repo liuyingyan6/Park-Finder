@@ -64,5 +64,18 @@
     <div>
         <button type="submit">Search</button>
     </div>
+
+    <!-- Parks Display Section -->
+    <div th:each="park : ${parks}">
+        <h2 th:text="${park.name}"></h2>
+        <p>Type: <span th:text="${park.type}"></span></p>
+        <p>Distance: <span th:text="${park.distance}"></span> miles</p>
+        <p>Amenities:
+            <span th:each="amenity : ${park.amenities}" th:text="${amenity} + ' '"></span>
+        </p>
+        <p>Accessibility:
+            <span th:each="access : ${park.accessibility}" th:text="${access} + ' '"></span>
+        </p>
+    </div>
 </form>
 <body>
