@@ -11,6 +11,6 @@ public class Review {
     private String username;
     private String parkName;
     private Integer rating;
-    private String context;
+    private String comment;
     private Date createTime;
 }
