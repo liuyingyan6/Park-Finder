@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+    <link rel="stylesheet" href="/CSSluca/styles.css">
 </head>
 <body>
 <!-- Add an advertising image container -->
@@ -20,49 +21,80 @@
     </div>
 </div>
 <div class="mainBody">
-<header>
-    <h1>Park Recommendation</h1>
-    <form th:action="@{/parks}" method="get">
-        <input type="text" name="searchText" placeholder="Search Park">
-        <select name="parkType">
-            <option value="">All Types</option>
-            <option value="city">City Park</option>
-            <option value="nature">Natural Park</option>
-            <!-- More types of options-->
-        </select>
-        <button type="submit">Search</button>
+    <form th:action="@{/filter}" method="get">
+
+        <div>
+            <label for="search">Search Parks:</label>
+            <input type="text" id="search" name="search" placeholder="Enter park name or keyword" />
+        </div>
+
+        <!-- Park Type Filter -->
+        <div>
+            <h3>Type of Park</h3>
+            <input type="checkbox" id="sportsPark" name="parkType" value="Sports Park" />
+            <label for="sportsPark">Sports Park</label>
+            <input type="checkbox" id="urbanPark" name="parkType" value="Urban Park" />
+            <label for="urbanPark">Urban Park</label>
+            <input type="checkbox" id="nationalPark" name="parkType" value="National Park" />
+            <label for="nationalPark">National Park</label>
+            <input type="checkbox" id="dogPark" name="parkType" value="Dog Park" />
+            <label for="dogPark">Dog Park</label>
+        </div>
+
+        <!-- Distance Filter -->
+        <div>
+            <h3>Distance</h3>
+            <select id="distance" name="distance">
+                <option value="" selected disabled>Select distance</option>
+                <option value="5">Within 5 miles</option>
+                <option value="10">Within 10 miles</option>
+                <option value="20">Within 20 miles</option>
+                <!-- Add more distances as necessary -->
+            </select>
+        </div>
+
+        <!-- Amenities Filter -->
+        <div>
+            <h3>Amenities</h3>
+            <input type="checkbox" id="cafe" name="amenities" value="Cafe" />
+            <label for="cafe">Cafe</label>
+            <input type="checkbox" id="sportsFacilities" name="amenities" value="Sports Facilities" />
+            <label for="sportsFacilities">Sports Facilities</label>
+            <input type="checkbox" id="toilets" name="amenities" value="Toilets" />
+            <label for="toilets">Toilets</label>
+            <input type="checkbox" id="childrenArea" name="amenities" value="Children's Area" />
+            <label for="childrenArea">Children's Area</label>
+        </div>
+
+        <!-- Accessibility Filter -->
+        <div>
+            <h3>Accessibility</h3>
+            <input type="checkbox" id="wheelchairAccess" name="accessibility" value="Wheelchair Access" />
+            <label for="wheelchairAccess">Wheelchair Access</label>
+            <input type="checkbox" id="carPark" name="accessibility" value="Car Park" />
+            <label for="carPark">Car Park</label>
+            <input type="checkbox" id="animals" name="accessibility" value="Animals Allowed" />
+            <label for="animals">Animals Allowed</label>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit">Search</button>
+        </div>
+
+        <!-- Parks Display Section -->
+        <div th:each="park : ${parks}">
+            <a th:href="@{/showPark/${park.name}}" th:text="${park.name}"></a>
+            <p>Type: <span th:text="${park.type}"></span></p>
+            <p>Distance: <span th:text="${park.distance}"></span> miles</p>
+            <p>Amenities:
+                <span th:each="amenity : ${park.amenities}" th:text="${amenity} + ' '"></span>
+            </p>
+            <p>Accessibility:
+                <span th:each="access : ${park.accessibility}" th:text="${access} + ' '"></span>
+            </p>
+        </div>
     </form>
-</header>
-<section class="slideshow-container">
-    <div th:each="park, iterStat : ${slideImgs}" class="slide" th:classappend="${iterStat.index == 0} ? 'active' : ''">
-        <img th:src="@{/images/__${park.image}__}" alt="[[${park.name}]]">
-    </div>
-</section>
-
-
-<section id="parkList">
-    <table>
-        <thead>
-        <tr>
-            <th>Park Name</th>
-            <th>Park Type</th>
-            <th>Park Img</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="park : ${parks}" class="park-row">
-            <td th:text="${park.name}"></td>
-            <td th:text="${park.type}"></td>
-            <td>
-                <img th:src="@{/images/__${park.image}__}" alt="[[${park.name}]]" class="thumbnail"
-                     th:data-image-url="__${park.image}__" onclick="showImage(this)">            </td>
-        </tr>
-        </tbody>
-    </table>
-</section>
-<div class="overlay" onclick="closeImage()">
-    <img src="" alt="" class="large-image">
-</div>
 </div>
 
 <div th:replace="~{fragments/footer :: footerBlock}"/></div>
