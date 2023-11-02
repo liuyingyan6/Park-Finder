@@ -91,7 +91,7 @@
             else{
                 //转页面 Transfer to Home page(successful login)
                 localStorage.setItem("currentUserName",usernameS);
-                location.href = "   ";
+                location.href = "/parks";
             }
 
         }
@@ -129,7 +129,7 @@
 
                     //完成注册 successful registration
 
-                    // localStorage.setItem(usernameS,passwordS);
+                    localStorage.setItem(usernameS,passwordS);
                     alert("Congratulations, successful registration");
                 }
             }

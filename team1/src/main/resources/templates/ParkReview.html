@@ -112,7 +112,7 @@
     </div>
 
     <div id="ifGuest">
-        <a href="login.html">Please log in to post your review</a>
+        <a href="/login">Please log in to post your review</a>
     </div>
 
     <div id="ifLogined">
@@ -133,7 +133,7 @@
     </div>
 
     <script>
-        localStorage.setItem('username','aa');
+        // localStorage.setItem('username','aa');
         // 从Local Storage中获取username
         const username = localStorage.getItem('username');
 
@@ -144,12 +144,12 @@
 
         if (username) {
             // 如果有username，显示ifLogined
-            // ifLoginedDiv.style.display = 'block';
+            ifLoginedDiv.style.display = 'block';
             ifGuestDiv.style.display = 'none';
             usernameField.value = username;
         } else {
             // 如果没有username，显示ifGuest
-            // ifGuestDiv.style.display = 'block';
+            ifGuestDiv.style.display = 'block';
             ifLoginedDiv.style.display = 'none';
         }
     </script>
