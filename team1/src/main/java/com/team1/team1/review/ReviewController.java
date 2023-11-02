@@ -1,6 +1,5 @@
 package com.team1.team1.review;
 
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +21,7 @@ public class ReviewController {
     //        <a th:href="@{/parkReviews/ButePark}">修改</a>
     @GetMapping(value = "/parkReviews/{parkName}", produces = "application/json;charset=utf-8")
     public ModelAndView parkReviews(@PathVariable String parkName) {
-        ModelAndView mav = new ModelAndView("ParkDetail");
+        ModelAndView mav = new ModelAndView("ParkReview");
         List<Review> accordingReviews = new ArrayList<>();
         for (Review review : reviewList) {
             if (parkName.equalsIgnoreCase(review.getParkName())) {
@@ -30,27 +29,26 @@ public class ReviewController {
             }
         }
         mav.addObject("reviews", accordingReviews);
-        return mav;
-    }
-
-    @GetMapping("/reviewForm/{parkName}")
-    public ModelAndView ReviewSubmit(@PathVariable String parkName) {
-        ModelAndView mav = new ModelAndView("ReviewForm");
         mav.addObject("review", new Review("", parkName, 0, "", null));
         return mav;
     }
 
+//    @GetMapping("/reviewForm/{parkName}")
+//    public ModelAndView ReviewSubmit(@PathVariable String parkName) {
+//        ModelAndView mav = new ModelAndView("ReviewForm");
+//        mav.addObject("review", new Review("", parkName, 0, "", null));
+//        return mav;
+//    }
+
     @PostMapping("/submitReviewForm")
-    public ModelAndView submitReviewForm(@Valid @ModelAttribute("review") Review review,
+    public ModelAndView submitReviewForm(@ModelAttribute("review") Review review,
                                          BindingResult bindingResult, Model model) {
         review.setCreateTime(new Date());
         System.out.println(review);
         reviewList.add(review);
-//        if (bindingResult.hasErrors()) {
-//            ModelAndView mav = new ModelAndView("ReviewForm", model.asMap());
-//            return mav;
-//        }
-        ModelAndView modelAndView = new ModelAndView("redirect:/parkList.html");
+
+        String redirectUrl = "redirect:/parkReviews/" + review.getParkName();
+        ModelAndView modelAndView = new ModelAndView(redirectUrl);
         return modelAndView;
     }
 

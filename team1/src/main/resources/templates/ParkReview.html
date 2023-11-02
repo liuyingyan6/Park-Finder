@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Review Submit</title>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Park Detail</title>
 </head>
 <body>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Create Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review:${reviews}">
+                <td th:text="${review.username}"></td>
+                <td th:text="${review.rating}"></td>
+                <td th:text="${review.comment}"></td>
+                <td th:text="${review.createTime}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
     <div id="ifGuest">
-        <a href="../login.html">Please log in to post your review</a>
+        <a href="login.html">Please log in to post your review</a>
     </div>
 
     <div id="ifLogined">
