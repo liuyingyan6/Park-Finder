@@ -30,15 +30,23 @@ public class ReviewController {
         }
         mav.addObject("reviews", accordingReviews);
         mav.addObject("review", new Review("", parkName, 0, "", null));
+        
+        // calculate rating average
+        double averageRating = calculateAverageRating(accordingReviews);
+        mav.addObject("averageRating", averageRating);
         return mav;
     }
 
-//    @GetMapping("/reviewForm/{parkName}")
-//    public ModelAndView ReviewSubmit(@PathVariable String parkName) {
-//        ModelAndView mav = new ModelAndView("ReviewForm");
-//        mav.addObject("review", new Review("", parkName, 0, "", null));
-//        return mav;
-//    }
+    private double calculateAverageRating(List<Review> reviews) {
+        if (reviews.isEmpty()) {
+            return 0.0;
+        }
+        double totalRating = 0.0;
+        for (Review review : reviews) {
+            totalRating += review.getRating();
+        }
+        return totalRating / reviews.size();
+    }
 
     @PostMapping("/submitReviewForm")
     public ModelAndView submitReviewForm(@ModelAttribute("review") Review review,
