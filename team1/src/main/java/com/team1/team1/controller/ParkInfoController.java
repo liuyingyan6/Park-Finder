@@ -23,7 +23,7 @@ public class ParkInfoController {
         ParkInfo parkB = new ParkInfo(2, "ParkB", "Sports Park", 10, true, true, true, true, false, true, true, 4.0, openingHours, "/img/park2.jpg");
         parks.add(parkB);
 
-        ParkInfo parkC = new ParkInfo(3, "ParkC", "Dog Park", 3.0, true, true, false, true, true, true, true, 4.0, openingHours, "/img/park2.jpg");
+        ParkInfo parkC = new ParkInfo(3, "ParkC", "Dog Park", 3.0, true, true, false, true, true, true, true, 4.0, openingHours, "/img/park3.jpg");
         parks.add(parkC);
 
     }
@@ -37,7 +37,7 @@ public class ParkInfoController {
         return "ParkInfo";
     }
     @GetMapping("/showPark/{name}")
-    public String showParkInfo1(Model model,@PathVariable String name) {
+    public String showPark(Model model,@PathVariable String name) {
 
         ParkInfo foundPark = new ParkInfo();
         List<OpeningHour> openingHours = new ArrayList<>();
