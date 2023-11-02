@@ -17,16 +17,29 @@ public class ParkInfoController {
 
     public ParkInfoController() {
 
-        ParkInfo park1 = new ParkInfo(1, "Park 1", "Type 1", 1.5, true, true, true, true, true, true, true, 4.5, openingHours, "/img/park1.jpg");
-        parks.add(park1);
+        ParkInfo parkA = new ParkInfo(1, "ParkA", "Urban Park", 5, true, true, true, true, true, true, true, 4.5, openingHours, "/img/park1.jpg");
+        parks.add(parkA);
 
-        ParkInfo park2 = new ParkInfo(2, "Park 2", "Type 2", 2.0, true, true, true, true, true, true, true, 4.0, openingHours, "/img/park2.jpg");
-        parks.add(park2);
+        ParkInfo parkB = new ParkInfo(2, "ParkB", "Sports Park", 10, true, true, true, true, false, true, true, 4.0, openingHours, "/img/park2.jpg");
+        parks.add(parkB);
+
+        ParkInfo parkC = new ParkInfo(3, "ParkC", "Dog Park", 3.0, true, true, false, true, true, true, true, 4.0, openingHours, "/img/park2.jpg");
+        parks.add(parkC);
 
     }
 
-    @GetMapping("/parkInfo")
+    @GetMapping("/parkInfo/{name}")
     public String showParkInfo(Model model) {
+
+
+        ParkInfo park = new ParkInfo(1,"Central Park", "Sport park", 1.5, true, true, true, true, true, true, true, 4.5, openingHours,"/img/park1.jpg");
+        model.addAttribute("park", park);
+        return "ParkInfo";
+    }
+    @GetMapping("/showPark/{name}")
+    public String showParkInfo1(Model model,@PathVariable String name) {
+
+        ParkInfo foundPark = new ParkInfo();
         List<OpeningHour> openingHours = new ArrayList<>();
         openingHours.add(new OpeningHour("Monday", "9:00 AM - 6:00 PM"));
         openingHours.add(new OpeningHour("Tuesday", "9:00 AM - 6:00 PM"));
@@ -35,24 +48,10 @@ public class ParkInfoController {
         openingHours.add(new OpeningHour("Friday", "9:00 AM - 6:00 PM"));
         openingHours.add(new OpeningHour("Saturday", "10:00 AM - 5:00 PM"));
         openingHours.add(new OpeningHour("Sunday", "Closed"));
-
-        ParkInfo park = new ParkInfo(1,"Central Park", "Sport park", 1.5, true, true, true, true, true, true, true, 4.5, openingHours,"/img/park1.jpg");
-        model.addAttribute("park", park);
-        return "ParkInfo";
-    }
-    @GetMapping("/showPark/{name}")
-    public String showParkByName(@PathVariable String name, Model model) {
-
-        ParkInfo foundPark = new ParkInfo();
-
         for (ParkInfo park : parks) {
-            if (parks != null) {
-                // 在这里安全地使用parks
-            } else {
-                // 处理ArrayList为空的情况
-            }
             if (park.getName().equals(name)) {
                 foundPark = park;
+                foundPark.setOpeningHours(openingHours);
                 break;
             }
         }
