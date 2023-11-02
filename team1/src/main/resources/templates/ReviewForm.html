@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Submit</title>
+</head>
+<body>
+    <form action="/submitReviewForm" method="post" id="reviewForm" name="reviewForm" th:object="${review}">
+        <label>Rating ( 1 - 5 )
+            <input th:field="*{rating}" type="text" name="rating">
+        </label>
+        <br>
+        <label>Review comments (max 50 words)<br>
+            <textarea th:field="*{comment}" name="comment" rows="8" cols="50"></textarea>
+        </label>
+        <br>
+        <input type="submit">
+    </form>
+    <a th:href="@{/parkReviews/ButePark}">修改</a>
+</body>
+</html>
