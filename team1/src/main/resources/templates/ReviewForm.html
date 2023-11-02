@@ -5,17 +5,46 @@
     <title>Review Submit</title>
 </head>
 <body>
-    <form action="/submitReviewForm" method="post" id="reviewForm" name="reviewForm" th:object="${review}">
-        <label>Rating ( 1 - 5 )
-            <input th:field="*{rating}" type="text" name="rating">
-        </label>
-        <br>
-        <label>Review comments (max 50 words)<br>
-            <textarea th:field="*{comment}" name="comment" rows="8" cols="50"></textarea>
-        </label>
-        <br>
-        <input type="submit">
-    </form>
-    <a th:href="@{/parkReviews/ButePark}">修改</a>
+    <div id="ifGuest">
+        <a href="login.html">Please log in to post your review</a>
+    </div>
+
+    <div id="ifLogined">
+        <form action="/submitReviewForm" method="post" id="reviewForm" name="reviewForm" th:object="${review}">
+            <input type="hidden" id="usernameField" name="username" value="">
+            <input type="text" style="display: none" name="parkName" th:field="*{parkName}" th:value="${review.parkName}">
+            <label>Rating ( 1 - 5 )
+                <input th:field="*{rating}" type="text" name="rating">
+            </label>
+            <br>
+            <label>Review comments (max 50 words)<br>
+                <textarea th:field="*{comment}" name="comment" rows="8" cols="50"></textarea>
+            </label>
+            <br>
+            <input type="submit">
+        </form>
+    </div>
+
+    <script>
+        localStorage.setItem('username','aa');
+        // 从Local Storage中获取username
+        const username = localStorage.getItem('username');
+
+        // 获取ifGuest和ifLogined的div元素
+        const ifGuestDiv = document.getElementById('ifGuest');
+        const ifLoginedDiv = document.getElementById('ifLogined');
+        const usernameField = document.getElementById('usernameField');
+
+        if (username) {
+            // 如果有username，显示ifLogined
+            // ifLoginedDiv.style.display = 'block';
+            ifGuestDiv.style.display = 'none';
+            usernameField.value = username;
+        } else {
+            // 如果没有username，显示ifGuest
+            // ifGuestDiv.style.display = 'block';
+            ifLoginedDiv.style.display = 'none';
+        }
+    </script>
 </body>
 </html>

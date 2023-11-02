@@ -16,24 +16,27 @@ import java.util.List;
 
 @Controller
 public class ReviewController {
-    private List<Review> reviewList = List.of(
-            new Review("aa", "HeathPark", 5, "Good place to walk my dogs! Love it!!", new Date()),
-            new Review("kk", "ButePark", 4, "Beautiful", new Date()),
-            new Review("abby", "ButePark", 1, "No lights in night.", new Date()),
-            new Review("jessie", "ButePark", 5, "Love having a walk in Bute Park", new Date())
-    );
+    private List<Review> reviewList = new ArrayList<>();
 
-    @GetMapping("/parkReviews")
-    public ModelAndView parkReviews() {
+
+    //        <a th:href="@{/parkReviews/ButePark}">修改</a>
+    @GetMapping(value = "/parkReviews/{parkName}", produces = "application/json;charset=utf-8")
+    public ModelAndView parkReviews(@PathVariable String parkName) {
         ModelAndView mav = new ModelAndView("ParkDetail");
-        mav.addObject("reviews", reviewList);
+        List<Review> accordingReviews = new ArrayList<>();
+        for (Review review : reviewList) {
+            if (parkName.equalsIgnoreCase(review.getParkName())) {
+                accordingReviews.add(review);
+            }
+        }
+        mav.addObject("reviews", accordingReviews);
         return mav;
     }
 
-    @GetMapping("/reviewForm")
-    public ModelAndView ReviewSubmit() {
+    @GetMapping("/reviewForm/{parkName}")
+    public ModelAndView ReviewSubmit(@PathVariable String parkName) {
         ModelAndView mav = new ModelAndView("ReviewForm");
-        mav.addObject("review", new Review());
+        mav.addObject("review", new Review("", parkName, 0, "", null));
         return mav;
     }
 
@@ -41,24 +44,14 @@ public class ReviewController {
     public ModelAndView submitReviewForm(@Valid @ModelAttribute("review") Review review,
                                          BindingResult bindingResult, Model model) {
         review.setCreateTime(new Date());
-        if (bindingResult.hasErrors()) {
-            ModelAndView mav = new ModelAndView("ReviewForm", model.asMap());
-            System.out.println("Errors");
-            return mav;
-        }
-        return new ModelAndView("redirect:/ParkDetail.html");
+        System.out.println(review);
+        reviewList.add(review);
+//        if (bindingResult.hasErrors()) {
+//            ModelAndView mav = new ModelAndView("ReviewForm", model.asMap());
+//            return mav;
+//        }
+        ModelAndView modelAndView = new ModelAndView("redirect:/parkList.html");
+        return modelAndView;
     }
 
-    @GetMapping(value = "/parkReviews/{parkName}", produces = "application/json;charset=utf-8")
-    public ModelAndView parkReviews(@PathVariable String parkName) {
-        ModelAndView mav = new ModelAndView("ParkDetail");
-        List<Review> accordingReviews = new ArrayList<>();
-        for (Review review : reviewList) {
-            if (review.getParkName().equals(parkName)){
-                accordingReviews.add(review);
-            }
-        }
-        mav.addObject("reviews", accordingReviews);
-        return mav;
-    }
 }
