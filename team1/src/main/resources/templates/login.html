@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html";charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/css/style_index.css">
+    <!-- <link rel="shortcut icon" href="./dataPictures/img_index/logo.png"> -->
+    <title>Park Finder: Login/Registration</title>
+</head>
+<body>
+<div class="container">
+    <div class="form-box">
+        <!-- 注册Register -->
+        <div class="register-box hidden">
+            <h1>Register</h1>
+            <input id="regi_username" value="" type="text" placeholder="Username" onblur="ifError()">
+            <div class="input-error" id="username_error" style="display: none;"></div>
+            <input id="regi_useremail" type="email" placeholder="E-mail" onblur="ifError()">
+            <div class="input-error" id="email_error" style="display: none;">please input your E-mail</div>
+            <input id="regi_password" value="" type="password" placeholder="Password" onblur="ifError()">
+            <div class="input-error" id="Password_error" style="display: none;">please input your password</div>
+            <input id="regi_passwordEnsure" value="" type="password" placeholder="Re-enter Password" onblur="ifError()">
+            <div class="input-error" id="PasswordEnsure_error" style="display: none;">please input your password again</div>
+            <button id="regi_button">Next</button>
+        </div>
+        <!-- 登录Login -->
+        <div class="login-box">
+            <h1>Login</h1>
+            <input id="login_username" value="" type="text" placeholder="Username" onblur="ifError()">
+            <div class="input-error" id="login_username_error" style="display: none;">please input your username</div>
+            <input id="login_password" value="" type="password" placeholder="Password" onblur="ifError()">
+            <div class="input-error" id="login_password_error" style="display: none;">please input your password</div>
+            <button id="login_button">Go</button>
+        </div>
+    </div>
+    <div class="con-box left">
+        <h2>Welcome<span>Park Finder</span></h2>
+        <p>Get more <span>parking</span> information</p>
+        <img src="/pictures/1.png" alt="">
+        <p>Completed registration?</p>
+        <button id="login">Go Login</button>
+    </div>
+    <div class="con-box right">
+        <h2>Welcome <span>Park Finder</span></h2>
+        <p>Make travel more <span>convenient</span></p>
+        <img src="/pictures/2.png" alt="">
+        <p>Haven't registe?</p>
+        <button id="register">Go register</button>
+    </div>
+</div>
+
+<!-- 去登陆去注册事件  "go Login" event-->
+<script>
+    //要操作的元素
+    let login=document.getElementById('login');
+    let register=document.getElementById('register');
+    let form_box=document.getElementsByClassName('form-box')[0];
+    let register_box=document.getElementsByClassName('register-box')[0];
+    let login_box=document.getElementsByClassName('login-box')[0];
+
+    //去注册按钮点击事件 set click event for "go register"
+    register.addEventListener('click',()=>{
+        form_box.style.transform='translateX(95%)';
+        login_box.classList.add('hidden');
+        register_box.classList.remove('hidden');
+    })
+    //去登录按钮点击事件 set click event for "go Login"
+    login.addEventListener('click',()=>{
+        form_box.style.transform='translateX(0%)';
+        register_box.classList.add('hidden');
+        login_box.classList.remove('hidden');
+    })
+</script>
+<!-- 登录事件 -->
+<script>
+    //要操作的元素 Every element needed
+    let buttonL = document.getElementById('login_button');
+
+    function loginButton(){
+        var usernameL = document.getElementById('login_username').value;
+        var passwordL = document.getElementById('login_password').value;
+        //查看是否输入完整 ensure complete username and password
+        if(usernameL==""||passwordL==""){
+            alert("Please fill in complete information");
+        }
+        else{
+            //核对用户名与密码是否匹配 check out if  username and password matching
+            if(localStorage.getItem(usernameL)!=passwordL){
+                alert("username and password mismatch");
+            }
+            else{
+                //转页面 Transfer to Home page(successful login)
+                localStorage.setItem("currentUserName",usernameS);
+                location.href = "   ";
+            }
+
+        }
+    };
+
+    //点击登录按钮后的逻辑
+    buttonL.addEventListener('click',()=>{
+        loginButton();
+    })
+</script>
+<!-- 注册事件 "go register" event-->
+<script>
+    //#region button event
+    let buttonS = document.getElementById("regi_button")
+
+    function regiButton(){
+        var usernameS = document.getElementById("regi_username").value;
+        var emailS= document.getElementById("regi_useremail").value;
+        var passwordS = document.getElementById("regi_password").value;
+        var passwordSE = document.getElementById("regi_passwordEnsure").value;
+
+        if(usernameS==''||passwordS==''||passwordSE==''||emailS==''){
+            alert("Please fill in complete information");
+        }else{
+            //检验是否已经注册 check out if this username hase registed
+            if(localStorage.getItem(usernameS)!=null&&localStorage.getItem(usernameS)!=''){
+                alert(usernameS+" has registered");
+            }
+            else{
+                //检测密码和检验密码是否匹配 check out if is re-enter password identical to password
+                if(passwordS!=passwordSE){
+                    alert("Inconsistency between password and Re-enter password");
+                }
+                else{
+
+                    //完成注册 successful registration
+
+                    // localStorage.setItem(usernameS,passwordS);
+                    alert("Congratulations, successful registration");
+                }
+            }
+        }
+    }
+
+    buttonS.addEventListener('click',()=>{
+        regiButton();
+    })
+    //#endregion
+
+    //#region input event
+    function ifError(){
+        let rUsername=document.getElementById("regi_username");
+        let rEmail=document.getElementById("regi_useremail");
+        let rPassword=document.getElementById("regi_password");
+        let rPasswordES=document.getElementById("regi_passwordEnsure");
+        let lUsername=document.getElementById("login_username");
+        let lPassword=document.getElementById("login_password");
+
+        let rUsernameError=document.getElementById("username_error");
+        let rEmailError=document.getElementById("email_error");
+        let rPasswordError=document.getElementById("Password_error");
+        let rPasswordESError=document.getElementById("PasswordEnsure_error");
+        let lUsernameError=document.getElementById("login_username_error");
+        let lPasswordError=document.getElementById("login_password_error");
+
+        //1
+        // if(rUsername!=null&&rUsername.value!=''){
+        //      //检验是否已经注册 check out if this username hase registed
+        //      if(localStorage.getItem(usernameS)!=''){
+        //         rUsernameError.textContent="Username has registed";
+        //     }else{
+        //         rUsernameError.style.display="none";}
+        // }else{
+        //         rUsernameError.textContent="please input your username";
+        //         rUsernameError.style.display="block";
+        // }
+        if(rUsername!=null&&rUsername.value!=''){
+            rUsernameError.style.display="none"
+        }else{
+            rUsernameError.style.display="block"
+        }
+
+        //2
+        if(rEmail!=null&&rEmail.value!=''){
+            const emailReg=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z]{2,4})+$/;
+            if(emailReg.test(rEmail.value)){
+                rEmailError.style.display="none";
+            }else{
+                rEmailError.textContent="please correct your E-mail format";
+            }
+        }else{
+            rEmailError.textContent="please input your E-mail";
+            rEmailError.style.display="block";
+        }
+
+        //3
+        if(rPassword!=null&&rPassword.value!=''){
+            rPasswordError.style.display="none";
+        }else{
+            rPasswordError.style.display="block";
+        }
+
+        //4
+        if(rPasswordES!=null&&rPasswordES.value!=''){
+            rPasswordESError.style.display="none";
+        }else{
+            rPasswordESError.style.display="block";
+        }
+
+        //5
+        if(lUsername!=null&&lUsername.value!=''){
+            lUsernameError.style.display="none"
+        }else{
+            lUsernameError.style.display="block"
+        }
+
+        //6
+        if(lPassword!=null&&lPassword.value!=''){
+            lPasswordError.style.display="none"
+        }else{
+            lPasswordError.style.display="block"
+
+        }
+    }
+    //#endregion
+</script>
+</body>
+</html>
