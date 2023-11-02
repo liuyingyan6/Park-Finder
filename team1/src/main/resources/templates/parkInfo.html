@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Park Finder</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.1/lib/theme-chalk/index.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+    <style>
+        /* 样式调整 */
+        .park-card {
+            display: flex;
+            align-items: center;
+        }
+
+        .park-image {
+            max-width: 65%;
+            height: auto;
+        }
+
+        .park-details {
+            margin-left: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .park-details h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #333; /* 详情标题颜色 */
+        }
+
+        .park-details p {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #555; /* 详情文本颜色 */
+        }
+
+        .park-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .park-details ul li {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #555; /* 详情文本颜色 */
+        }
+        .park-card-border {
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+        }
+
+        .rating-label {
+            font-size: 16px;
+            color: #555;
+            margin-right: 10px;
+        }
+
+        .el-rate {
+            font-size: 24px; /* 调整评分图标的大小 */
+            color: #f7c31a; /* 修改评分图标的颜色 */
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <el-container>
+        <el-header>
+            <a th:href="@{/parks}"> <!-- 这里指定Parks页面的URL -->
+                <el-page-header @back="goBack" th:content="${'Park Finder'}"></el-page-header>
+            </a>
+        </el-header>
+        <el-main>
+            <el-card class="park-card-border">
+                <div class="park-card">
+                    <img class="park-image" th:src="${park.imagePath}" alt="Park Image">
+                    <div class="park-details">
+                        <h2 th:text="${park.name}">Park Name</h2>
+                        <p th:text="'Type: ' + ${park.type}">Park Type</p>
+                        <p th:text="'Distance: ' + ${park.distance} + ' miles'">1.5 miles</p>
+                        <p>Facilities:</p>
+                        <ul>
+                            <!-- Facilities -->
+                            <li>
+                                Coffee: <span th:utext="${park.hasCoffee ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Toilet: <span th:utext="${park.hasToilet ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Exercise Equipment: <span th:utext="${park.hasExerciseEquipment ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Children Playground: <span th:utext="${park.hasChildrenPlayground ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Wheelchair Accessible: <span th:utext="${park.wheelchairAccessible ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Parking: <span th:utext="${park.hasParking ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Pet Friendly: <span th:utext="${park.petFriendly ? 'Yes' : 'No'}"></span>
+                            </li>
+                        </ul>
+
+                        <el-collapse v-model="isOpen">
+                            <el-collapse-item title="Opening Hours">
+                                <ul>
+                                    <li th:each="hour : ${park.openingHours}">
+                                        <span th:text="${hour.day}"></span>: <span th:text="${hour.hours}"></span>
+                                    </li>
+                                </ul>
+                            </el-collapse-item>
+                        </el-collapse>
+                        <div class="rating">
+                            <span class="rating-label">Rating:</span>
+                            <el-rate v-model="parkRating" :colors="['#f7c31a']" disabled></el-rate>
+                        </div>
+                    </div>
+                </div>
+            </el-card>
+        </el-main>
+        <div th:replace="~{fragments/footer :: footerBlock}"/></div>
+    </el-container>
+</div>
+
+<script src="https://unpkg.com/vue@2.6.14/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui@2.15.1/lib/index.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            isOpen: false,
+            parkRating: 4.5, // 设置默认评分
+        },
+        methods: {
+            goBack() {
+                // 返回操作
+                window.history.back();
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
+</head>
+<body>
+<!-- Add an advertising image container -->
+<div class="ad-container">
+    <div class="ad-slide left">
+        <img src="/images/ad1.jpg" alt="Left side advertising">
+    </div>
+    <div class="ad-slide left">
+        <img src="/images/ad3.jpg" alt="Left side advertising">
+    </div>
+    <div class="ad-slide right">
+        <img src="/images/ad2.jpg" alt="Right side advertising">
+    </div>
+    <div class="ad-slide right">
+        <img src="/images/ad4.jpg" alt="Right side advertising">
+    </div>
+</div>
+<div class="mainBody">
+<header>
+    <h1>Park Recommendation</h1>
+    <form th:action="@{/parks}" method="get">
+        <input type="text" name="searchText" placeholder="Search Park">
+        <select name="parkType">
+            <option value="">All Types</option>
+            <option value="city">City Park</option>
+            <option value="nature">Natural Park</option>
+            <!-- More types of options-->
+        </select>
+        <button type="submit">Search</button>
+    </form>
+</header>
+<section class="slideshow-container">
+    <div th:each="park, iterStat : ${slideImgs}" class="slide" th:classappend="${iterStat.index == 0} ? 'active' : ''">
+        <img th:src="@{/images/__${park.image}__}" alt="[[${park.name}]]">
+    </div>
+</section>
+
+
+<section id="parkList">
+    <table>
+        <thead>
+        <tr>
+            <th>Park Name</th>
+            <th>Park Type</th>
+            <th>Park Img</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="park : ${parks}" class="park-row">
+            <td th:text="${park.name}"></td>
+            <td th:text="${park.type}"></td>
+            <td>
+                <img th:src="@{/images/__${park.image}__}" alt="[[${park.name}]]" class="thumbnail"
+                     th:data-image-url="__${park.image}__" onclick="showImage(this)">            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<div class="overlay" onclick="closeImage()">
+    <img src="" alt="" class="large-image">
+</div>
+</div>
+
+<div th:replace="~{fragments/footer :: footerBlock}"/></div>
+</body>
+<script th:src="@{/js/script.js}" src="/js/script.js"></script>
+</html>
