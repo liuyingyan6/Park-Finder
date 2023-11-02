@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Park Detail</title>
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* 表单样式 */
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        /* 隐藏元素 */
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div th:if="${reviews.isEmpty()}">
+        <p>No review yet. Would you like to be the first one to share your thoughts?</p>
+    </div>
+    <div th:unless="${reviews.isEmpty()}">
+        <p>Average Rating: <span th:text="${averageRating}"></span></p>
+        <table>
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Create Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review : ${reviews}">
+                <td th:text="${review.username}"></td>
+                <td th:text="${review.rating}"></td>
+                <td th:text="${review.comment}"></td>
+                <td th:text="${review.createTime}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div id="ifGuest">
+        <a href="login.html">Please log in to post your review</a>
+    </div>
+
+    <div id="ifLogined">
+        <form action="/submitReviewForm" method="post" id="reviewForm" name="reviewForm" th:object="${review}">
+            <input type="hidden" id="usernameField" name="username" value="">
+            <input type="text" style="display: none" name="parkName" th:field="*{parkName}" th:value="${review.parkName}">
+            <label>Rating ( 1 - 5 )
+<!--                <input th:field="*{rating}" type="text" name="rating">-->
+                <input th:field="*{rating}" type="range" name="rating" min="1" max="5" >
+            </label>
+            <br>
+            <label>Review comments (max 50 words)<br>
+                <textarea th:field="*{comment}" name="comment" rows="8" cols="50"></textarea>
+            </label>
+            <br>
+            <input type="submit">
+        </form>
+    </div>
+
+    <script>
+        localStorage.setItem('username','aa');
+        // 从Local Storage中获取username
+        const username = localStorage.getItem('username');
+
+        // 获取ifGuest和ifLogined的div元素
+        const ifGuestDiv = document.getElementById('ifGuest');
+        const ifLoginedDiv = document.getElementById('ifLogined');
+        const usernameField = document.getElementById('usernameField');
+
+        if (username) {
+            // 如果有username，显示ifLogined
+            // ifLoginedDiv.style.display = 'block';
+            ifGuestDiv.style.display = 'none';
+            usernameField.value = username;
+        } else {
+            // 如果没有username，显示ifGuest
+            // ifGuestDiv.style.display = 'block';
+            ifLoginedDiv.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
