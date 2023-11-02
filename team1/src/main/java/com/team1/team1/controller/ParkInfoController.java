@@ -24,9 +24,7 @@ public class ParkInfoController {
         openingHours.add(new OpeningHour("Sunday", "Closed"));
 
         ParkInfo park = new ParkInfo(1,"Central Park", "Sport park", 1.5, true, true, true, true, true, true, true, 4.5, openingHours,"/img/park1.jpg");
-        ParkInfo park1 = new ParkInfo(2,"Central Park", "Sport park", 1.5, true, true, true, true, true, true, true, 4.5, openingHours,"/img/park1.jpg");
         model.addAttribute("park", park);
-        model.addAttribute("park1", park1);
         return "ParkInfo";
     }
 
