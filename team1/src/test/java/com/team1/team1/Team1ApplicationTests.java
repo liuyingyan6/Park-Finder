@@ -9,7 +9,4 @@ class Team1ApplicationTests {
     @Test
     void contextLoads() {
     }
-
-
-
 }
