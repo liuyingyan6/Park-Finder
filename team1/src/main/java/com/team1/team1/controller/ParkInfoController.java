@@ -12,7 +12,19 @@ import java.util.List;
 
 @Controller
 public class ParkInfoController {
+    List<OpeningHour> openingHours = new ArrayList<>();
     List<ParkInfo> parks = new ArrayList<>();
+
+    public ParkInfoController() {
+
+        ParkInfo park1 = new ParkInfo(1, "Park 1", "Type 1", 1.5, true, true, true, true, true, true, true, 4.5, openingHours, "/img/park1.jpg");
+        parks.add(park1);
+
+        ParkInfo park2 = new ParkInfo(2, "Park 2", "Type 2", 2.0, true, true, true, true, true, true, true, 4.0, openingHours, "/img/park2.jpg");
+        parks.add(park2);
+
+    }
+
     @GetMapping("/parkInfo")
     public String showParkInfo(Model model) {
         List<OpeningHour> openingHours = new ArrayList<>();
@@ -34,7 +46,11 @@ public class ParkInfoController {
         ParkInfo foundPark = new ParkInfo();
 
         for (ParkInfo park : parks) {
-
+            if (parks != null) {
+                // 在这里安全地使用parks
+            } else {
+                // 处理ArrayList为空的情况
+            }
             if (park.getName().equals(name)) {
                 foundPark = park;
                 break;
