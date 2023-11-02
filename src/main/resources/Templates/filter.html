@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Park Advisor</title>
+</head>
+
+<form th:action="@{/filter}" method="get">
+
+    <div>
+        <label for="search">Search Parks:</label>
+        <input type="text" id="search" name="search" placeholder="Enter park name or keyword" />
+    </div>
+
+    <!-- Park Type Filter -->
+    <div>
+        <h3>Type of Park</h3>
+        <input type="checkbox" id="sportsPark" name="parkType" value="Sports Park" />
+        <label for="sportsPark">Sports Park</label>
+        <input type="checkbox" id="urbanPark" name="parkType" value="Urban Park" />
+        <label for="urbanPark">Urban Park</label>
+        <input type="checkbox" id="nationalPark" name="parkType" value="National Park" />
+        <label for="nationalPark">National Park</label>
+        <input type="checkbox" id="dogPark" name="parkType" value="Dog Park" />
+        <label for="dogPark">Dog Park</label>
+    </div>
+
+    <!-- Distance Filter -->
+    <div>
+        <h3>Distance</h3>
+        <select id="distance" name="distance">
+            <option value="" selected disabled>Select distance</option>
+            <option value="5">Within 5 miles</option>
+            <option value="10">Within 10 miles</option>
+            <option value="20">Within 20 miles</option>
+            <!-- Add more distances as necessary -->
+        </select>
+    </div>
+
+    <!-- Amenities Filter -->
+    <div>
+        <h3>Amenities</h3>
+        <input type="checkbox" id="cafe" name="amenities" value="Cafe" />
+        <label for="cafe">Cafe</label>
+        <input type="checkbox" id="sportsFacilities" name="amenities" value="Sports Facilities" />
+        <label for="sportsFacilities">Sports Facilities</label>
+        <input type="checkbox" id="toilets" name="amenities" value="Toilets" />
+        <label for="toilets">Toilets</label>
+        <input type="checkbox" id="childrenArea" name="amenities" value="Children's Area" />
+        <label for="childrenArea">Children's Area</label>
+    </div>
+
+    <!-- Accessibility Filter -->
+    <div>
+        <h3>Accessibility</h3>
+        <input type="checkbox" id="wheelchairAccess" name="accessibility" value="Wheelchair Access" />
+        <label for="wheelchairAccess">Wheelchair Access</label>
+        <input type="checkbox" id="carPark" name="accessibility" value="Car Park" />
+        <label for="carPark">Car Park</label>
+        <input type="checkbox" id="animals" name="accessibility" value="Animals Allowed" />
+        <label for="animals">Animals Allowed</label>
+    </div>
+
+    <!-- Submit Button -->
+    <div>
+        <button type="submit">Search</button>
+    </div>
+</form>
+<body>
