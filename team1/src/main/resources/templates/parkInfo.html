@@ -126,6 +126,7 @@
                             <span class="rating-label">Rating:</span>
                             <el-rate v-model="parkRating" :colors="['#f7c31a']" disabled></el-rate>
                         </div>
+                        <a th:href="@{/parkReviews/${park.name}}">View Reviews</a>
                     </div>
                 </div>
             </el-card>

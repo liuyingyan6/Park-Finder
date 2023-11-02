@@ -18,7 +18,7 @@ public class ReviewController {
     private List<Review> reviewList = new ArrayList<>();
 
 
-    //        <a th:href="@{/parkReviews/ButePark}">修改</a>
+    //        <a th:href="@{/parkReviews/ButePark}">1231231</a>
     @GetMapping(value = "/parkReviews/{parkName}", produces = "application/json;charset=utf-8")
     public ModelAndView parkReviews(@PathVariable String parkName) {
         ModelAndView mav = new ModelAndView("ParkReview");
