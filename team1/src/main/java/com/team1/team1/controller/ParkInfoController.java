@@ -5,13 +5,14 @@ import com.team1.team1.model.ParkInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class ParkInfoController {
-
+    List<ParkInfo> parks = new ArrayList<>();
     @GetMapping("/parkInfo")
     public String showParkInfo(Model model) {
         List<OpeningHour> openingHours = new ArrayList<>();
@@ -28,6 +29,25 @@ public class ParkInfoController {
         model.addAttribute("park", park);
         model.addAttribute("park1", park1);
         return "ParkInfo";
+    }
+    @GetMapping("/showPark/{name}")
+    public String showParkByName(@PathVariable String name, Model model) {
+
+        ParkInfo foundPark = new ParkInfo();
+
+        for (ParkInfo park : parks) {
+
+            if (park.getName().equals(name)) {
+                foundPark = park;
+                break;
+            }
+        }
+        if (foundPark != null) {
+            model.addAttribute("park", foundPark);
+            return "ParkInfo";
+        } else {
+            return "errorPage";
+        }
     }
 
 }

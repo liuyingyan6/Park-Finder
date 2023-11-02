@@ -5,6 +5,10 @@ import java.util.List;
 public class ParkInfo {
     private Integer id;
 
+    public  ParkInfo() {
+        super();
+    }
+
     public Integer getId() {
         return id;
     }

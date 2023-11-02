@@ -147,8 +147,8 @@ footer {
 
 /* Logo样式 */
 .footer-logo img {
-    width: 100px; /* Logo宽度 */
-    height: auto; /* 根据宽度自动调整高度 */
+    width: 50px; /* Logo宽度 */
+    height: 50px; /* 根据宽度自动调整高度 */
 }
 
 /* Contact Us链接样式 */

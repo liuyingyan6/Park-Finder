@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Park Finder</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.1/lib/theme-chalk/index.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="/css/styles.css">
     <style>
         /* 样式调整 */
         .park-card {
@@ -47,14 +48,6 @@
             font-size: 16px;
             color: #555; /* 详情文本颜色 */
         }
-
-        .footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-
         .park-card-border {
             border: 1px solid #ccc;
             padding: 20px;
@@ -82,7 +75,9 @@
 <div id="app">
     <el-container>
         <el-header>
-            <el-page-header @back="goBack" th:content="${'Park Finder'}"></el-page-header>
+            <a th:href="@{/parks}"> <!-- 这里指定Parks页面的URL -->
+                <el-page-header @back="goBack" th:content="${'Park Finder'}"></el-page-header>
+            </a>
         </el-header>
         <el-main>
             <el-card class="park-card-border">
@@ -94,14 +89,30 @@
                         <p th:text="'Distance: ' + ${park.distance} + ' miles'">1.5 miles</p>
                         <p>Facilities:</p>
                         <ul>
-                            <li th:text="'Coffee: ' + ${park.hasCoffee}">Yes</li>
-                            <li th:text="'Toilet: ' + ${park.hasToilet}">Yes</li>
-                            <li th:text="'Exercise Equipment: ' + ${park.hasExerciseEquipment}">Yes</li>
-                            <li th:text="'Children Playground: ' + ${park.hasChildrenPlayground}">Yes</li>
-                            <li th:text="'Wheelchair Accessible: ' + ${park.wheelchairAccessible}">Yes</li>
-                            <li th:text="'Parking: ' + ${park.hasParking}">Yes</li>
-                            <li th:text="'Pet Friendly: ' + ${park.petFriendly}">Yes</li>
+                            <!-- Facilities -->
+                            <li>
+                                Coffee: <span th:utext="${park.hasCoffee ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Toilet: <span th:utext="${park.hasToilet ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Exercise Equipment: <span th:utext="${park.hasExerciseEquipment ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Children Playground: <span th:utext="${park.hasChildrenPlayground ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Wheelchair Accessible: <span th:utext="${park.wheelchairAccessible ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Parking: <span th:utext="${park.hasParking ? 'Yes' : 'No'}"></span>
+                            </li>
+                            <li>
+                                Pet Friendly: <span th:utext="${park.petFriendly ? 'Yes' : 'No'}"></span>
+                            </li>
                         </ul>
+
                         <el-collapse v-model="isOpen">
                             <el-collapse-item title="Opening Hours">
                                 <ul>
@@ -119,9 +130,7 @@
                 </div>
             </el-card>
         </el-main>
-        <el-footer class="footer">
-            &copy; 2023 Park Finder
-        </el-footer>
+        <div th:replace="~{fragments/footer :: footerBlock}"/></div>
     </el-container>
 </div>
 
